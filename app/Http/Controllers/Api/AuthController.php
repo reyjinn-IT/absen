@@ -37,13 +37,9 @@ class AuthController extends Controller
             'phone' => $request->phone
         ]);
 
-        $token = $user->createToken('auth_token')->plainTextToken;
-
         return $this->success([
             'user' => $user,
-            'access_token' => $token,
-            'token_type' => 'Bearer'
-        ], 'User registered successfully', 201);
+        ], 'User registered successfully. Please login to get access token.', 201);
     }
 
     public function login(Request $request)
@@ -57,11 +53,13 @@ class AuthController extends Controller
             return $this->error('Validation failed', 422, $validator->errors());
         }
 
-        if (!Auth::attempt($request->only('email', 'password'))) {
+        // GANTI Auth::attempt dengan manual check
+        $user = User::where('email', $request->email)->first();
+
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return $this->error('Invalid credentials', 401);
         }
 
-        $user = User::where('email', $request->email)->firstOrFail();
         $token = $user->createToken('auth_token')->plainTextToken;
 
         return $this->success([
