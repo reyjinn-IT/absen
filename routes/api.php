@@ -1,4 +1,3 @@
-// routes/api.php
 <?php
 
 use App\Http\Controllers\Api\AuthController;
@@ -21,10 +20,17 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix('admin')->middleware('role:admin')->group(function () {
         Route::get('/users', [AdminController::class, 'getUsers']);
         Route::post('/users', [AdminController::class, 'createUser']);
+        Route::put('/users/{id}', [AdminController::class, 'updateUser']);
+        Route::delete('/users/{id}', [AdminController::class, 'deleteUser']);
         Route::get('/matakuliah', [AdminController::class, 'getMatakuliah']);
+        Route::get('/matakuliah/{id}', [AdminController::class, 'getMatakuliahDetail']);
         Route::post('/matakuliah', [AdminController::class, 'createMatakuliah']);
+        Route::put('/matakuliah/{id}', [AdminController::class, 'updateMatakuliah']);
+        Route::delete('/matakuliah/{id}', [AdminController::class, 'deleteMatakuliah']);
         Route::get('/kelas', [AdminController::class, 'getKelas']);
         Route::post('/kelas', [AdminController::class, 'createKelas']);
+        Route::put('/kelas/{id}', [AdminController::class, 'updateKelas']);
+        Route::delete('/kelas/{id}', [AdminController::class, 'deleteKelas']);
         Route::post('/kelas/{kelasId}/mahasiswa', [AdminController::class, 'addMahasiswaToKelas']);
         Route::get('/dashboard', [AdminController::class, 'getDashboardStats']);
         Route::get('/laporan-absensi', [AdminController::class, 'getLaporanAbsensi']);
@@ -47,5 +53,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/absensi/riwayat', [MahasiswaController::class, 'getRiwayatAbsensi']);
         Route::get('/absensi/rekap', [MahasiswaController::class, 'getRekapAbsensiMahasiswa']);
         Route::post('/izin', [MahasiswaController::class, 'ajukanIzin']);
+        Route::put('/ganti-password', [MahasiswaController::class, 'gantiPassword']);
     });
 });

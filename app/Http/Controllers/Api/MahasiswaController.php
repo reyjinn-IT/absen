@@ -6,6 +6,7 @@ use App\Models\Kelas;
 use App\Models\Absensi;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 class MahasiswaController extends Controller
 {
@@ -123,5 +124,25 @@ class MahasiswaController extends Controller
         ]);
 
         return $this->success($absensi, 'Izin berhasil diajukan');
+    }
+    public function gantiPassword(Request $request)
+    {
+        $request->validate([
+            'password_lama' => 'required|string',
+            'password_baru' => 'required|string|min:8|confirmed',
+            'password_baru_confirmation' => 'required|string|min:8'
+        ]);
+
+        $user = $request->user();
+        if (!Hash::check($request->password_lama, $user->password)) {
+            return $this->error('Password lama tidak sesuai', 400);
+        }
+        if ($request->password_baru !== $request->password_baru_confirmation) {
+            return $this->error('Konfirmasi password baru tidak sesuai', 400);
+        }else{
+        $user->password = Hash::make($request->password_baru);
+        $user->save();
+        }
+        return $this->success(null, 'Password berhasil diubah');
     }
 }
