@@ -16,25 +16,25 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/profile', [AuthController::class, 'profile']);
 
-    // Admin routes
-    Route::prefix('admin')->middleware('role:admin')->group(function () {
-        Route::get('/users', [AdminController::class, 'getUsers']);
-        Route::post('/users', [AdminController::class, 'createUser']);
-        Route::put('/users/{id}', [AdminController::class, 'updateUser']);
-        Route::delete('/users/{id}', [AdminController::class, 'deleteUser']);
-        Route::get('/matakuliah', [AdminController::class, 'getMatakuliah']);
-        Route::get('/matakuliah/{id}', [AdminController::class, 'getMatakuliahDetail']);
-        Route::post('/matakuliah', [AdminController::class, 'createMatakuliah']);
-        Route::put('/matakuliah/{id}', [AdminController::class, 'updateMatakuliah']);
-        Route::delete('/matakuliah/{id}', [AdminController::class, 'deleteMatakuliah']);
-        Route::get('/kelas', [AdminController::class, 'getKelas']);
-        Route::post('/kelas', [AdminController::class, 'createKelas']);
-        Route::put('/kelas/{id}', [AdminController::class, 'updateKelas']);
-        Route::delete('/kelas/{id}', [AdminController::class, 'deleteKelas']);
-        Route::post('/kelas/{kelasId}/mahasiswa', [AdminController::class, 'addMahasiswaToKelas']);
-        Route::get('/dashboard', [AdminController::class, 'getDashboardStats']);
-        Route::get('/laporan-absensi', [AdminController::class, 'getLaporanAbsensi']);
-    });
+        // Admin routes
+        Route::prefix('admin')->middleware('role:admin')->group(function () {
+            Route::get('/users', [AdminController::class, 'getUsers']);
+            Route::post('/users', [AdminController::class, 'createUser']);
+            Route::put('/users/{id}', [AdminController::class, 'updateUser']);
+            Route::delete('/users/{id}', [AdminController::class, 'deleteUser']);
+            Route::get('/matakuliah', [AdminController::class, 'getMatakuliah']);
+            Route::get('/matakuliah/{id}', [AdminController::class, 'getMatakuliahDetail']);
+            Route::post('/matakuliah', [AdminController::class, 'createMatakuliah']);
+            Route::put('/matakuliah/{id}', [AdminController::class, 'updateMatakuliah']);
+            Route::delete('/matakuliah/{id}', [AdminController::class, 'deleteMatakuliah']);
+            Route::get('/kelas', [AdminController::class, 'getKelas']);
+            Route::post('/kelas', [AdminController::class, 'createKelas']);
+            Route::put('/kelas/{id}', [AdminController::class, 'updateKelas']);
+            Route::delete('/kelas/{id}', [AdminController::class, 'deleteKelas']);
+            Route::post('/kelas/{kelasId}/mahasiswa', [AdminController::class, 'addMahasiswaToKelas']);
+            Route::get('/dashboard', [AdminController::class, 'getDashboardStats']);
+            Route::get('/laporan-absensi', [AdminController::class, 'getLaporanAbsensi']);
+        });
 
     // Dosen routes
     Route::prefix('dosen')->middleware('role:dosen')->group(function () {
